@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://01u2t8l2teid"]
+
+[ext_resource type="Script" uid="uid://bf5d7862tel3m" path="res://Scripts/Player/FemaleMortal.cs" id="1_xq3hk"]
+[ext_resource type="PackedScene" uid="uid://ydpsxwr88jhc" path="res://Scenes/Player/female_mortal_model.tscn" id="2_xq3hk"]
+[ext_resource type="Texture2D" uid="uid://bmcnlj21jpknf" path="res://coremods/Origins/Mortal/Assets/Textures/mortal_skin_female.png" id="3_npuba"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lquwl"]
+albedo_texture = ExtResource("3_npuba")
+texture_filter = 0
+texture_repeat = false
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jqta2"]
+size = Vector3(1, 2, 1)
+
+[node name="FemaleMortal" type="CharacterBody3D" unique_id=1934131599 groups=["Player"]]
+collision_layer = 2
+collision_mask = 15
+script = ExtResource("1_xq3hk")
+
+[node name="FemaleMortalModel" parent="." unique_id=1188928144 instance=ExtResource("2_xq3hk")]
+transform = Transform3D(-0.8, 0, -1.2079664e-07, 0, 0.8, 0, 1.2079664e-07, 0, -0.8, 0, 0, 0)
+
+[node name="ROOT" parent="FemaleMortalModel/ROOT/Skeleton3D" parent_id_path=PackedInt32Array(1188928144, 1899736923) index="0" unique_id=78646698]
+surface_material_override/0 = SubResource("StandardMaterial3D_lquwl")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=412796605]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_jqta2")
+
+[connection signal="body_entered" from="FemaleMortalModel/ROOT/Skeleton3D/SwordAttachment/Sword/SwordArea" to="." method="HitEnemy"]
+
+[editable path="FemaleMortalModel"]

@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://oc4gwrfijluu"]
+
+[ext_resource type="Texture2D" uid="uid://dxhnyavqeroka" path="res://coremods/Origins/Mortal/Assets/Models/FemaleMortalPlayerModel_0.png" id="1_j4ja3"]
+
+[resource]
+albedo_texture = ExtResource("1_j4ja3")
+texture_filter = 0

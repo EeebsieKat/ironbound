@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://b8jnptrvic3xw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5sh28"]
+bg_color = Color(0.19463524, 0.20316073, 0.21062052, 1)
+border_color = Color(0.101097584, 0.101097584, 0.101097584, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+
+[node name="InventorySlot" type="Control" unique_id=2021512339]
+custom_minimum_size = Vector2(55, 55)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Panel" type="Panel" parent="." unique_id=1791784770]
+custom_minimum_size = Vector2(55, 55)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_5sh28")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1072749093]
+custom_minimum_size = Vector2(55, 55)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+
+[node name="Label" type="Label" parent="." unique_id=597091249]
+custom_minimum_size = Vector2(55, 55)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_colors/font_outline_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+theme_override_constants/outline_size = 8
+text = "1"
+horizontal_alignment = 2
+vertical_alignment = 2

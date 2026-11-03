@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://ddtj80pysoov8"]
+
+[ext_resource type="PackedScene" uid="uid://ydpsxwr88jhc" path="res://Scenes/Player/female_mortal_model.tscn" id="1_613su"]
+[ext_resource type="Script" uid="uid://jvid2272161j" path="res://Scripts/Enemies/Enemy.cs" id="1_jcvw6"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jqta2"]
+size = Vector3(1, 2.5, 1)
+
+[node name="Enemy" type="CharacterBody3D" unique_id=1224824289]
+collision_layer = 4
+collision_mask = 15
+script = ExtResource("1_jcvw6")
+
+[node name="FemaleMortalModel" parent="." unique_id=1188928144 instance=ExtResource("1_613su")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=908944740]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+shape = SubResource("BoxShape3D_jqta2")

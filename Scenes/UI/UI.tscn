@@ -1,0 +1,168 @@
+[gd_scene format=3 uid="uid://c3517y0e5vxj3"]
+
+[ext_resource type="Script" uid="uid://b3salrcdrilml" path="res://Scripts/UI/Inventory.cs" id="1_s86y4"]
+[ext_resource type="Script" uid="uid://dty1p23c77fw0" path="res://Scripts/UI/InventoryWindow.cs" id="1_w8wei"]
+[ext_resource type="Texture2D" uid="uid://oiamv1ugc4yh" path="res://Assets/blank_icon.png" id="2_636u5"]
+[ext_resource type="PackedScene" uid="uid://b8jnptrvic3xw" path="res://Scenes/UI/InventorySlot.tscn" id="3_7tgkj"]
+[ext_resource type="Script" uid="uid://ct08mmvhnvdwr" path="res://Scripts/UI/AddItem.cs" id="3_akgwn"]
+[ext_resource type="Script" uid="uid://d2wy7na5byho5" path="res://Scripts/UI/Hotbar.cs" id="4_jevvu"]
+[ext_resource type="Script" uid="uid://svu3inmgs4vr" path="res://Scripts/UI/HUDHotbar.cs" id="6_jevvu"]
+[ext_resource type="Script" uid="uid://c320wk3x8y8gk" path="res://Scripts/UI/CreativeMenu.cs" id="6_w8wei"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w8wei"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jevvu"]
+bg_color = Color(0.4053684, 0.4053684, 0.4053684, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.40392157, 0.40392157, 0.40392157, 1)
+
+[node name="UI" type="Control" unique_id=817789376]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=2069984368]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HUD" type="PanelContainer" parent="CenterContainer" unique_id=1446070667]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_w8wei")
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/HUD" unique_id=310110916]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_top = 550
+
+[node name="HUDHotbar" type="GridContainer" parent="CenterContainer/HUD/MarginContainer" unique_id=329202330 node_paths=PackedStringArray("targetHotbar")]
+custom_minimum_size = Vector2(495, 55)
+layout_mode = 2
+mouse_filter = 2
+columns = 9
+script = ExtResource("6_jevvu")
+blankIcon = ExtResource("2_636u5")
+slotScene = ExtResource("3_7tgkj")
+targetHotbar = NodePath("../../../Inventory/Slots/Hotbar")
+
+[node name="Inventory" type="PanelContainer" parent="CenterContainer" unique_id=619163938]
+custom_minimum_size = Vector2(495, 275)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jevvu")
+script = ExtResource("1_w8wei")
+
+[node name="Slots" type="VBoxContainer" parent="CenterContainer/Inventory" unique_id=1960095943]
+layout_mode = 2
+
+[node name="TabContainer" type="TabContainer" parent="CenterContainer/Inventory/Slots" unique_id=500629093]
+custom_minimum_size = Vector2(495, 220)
+layout_mode = 2
+current_tab = 1
+
+[node name="Inventory" type="Control" parent="CenterContainer/Inventory/Slots/TabContainer" unique_id=149520481]
+visible = false
+custom_minimum_size = Vector2(495, 220)
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="Inventory" type="GridContainer" parent="CenterContainer/Inventory/Slots/TabContainer/Inventory" unique_id=1673726285 node_paths=PackedStringArray("cursorItemUI", "hotbarNode")]
+custom_minimum_size = Vector2(495, 220)
+layout_mode = 0
+offset_right = 495.0
+offset_bottom = 165.0
+columns = 9
+script = ExtResource("1_s86y4")
+blankIcon = ExtResource("2_636u5")
+slotScene = ExtResource("3_7tgkj")
+cursorItemUI = NodePath("../../../../../../CursorItem")
+hotbarNode = NodePath("../../../Hotbar")
+
+[node name="Creative Inv" type="Control" parent="CenterContainer/Inventory/Slots/TabContainer" unique_id=334807843]
+custom_minimum_size = Vector2(495, 220)
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CenterContainer/Inventory/Slots/TabContainer/Creative Inv" unique_id=947380663]
+custom_minimum_size = Vector2(495, 220)
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="CreativeMenu" type="GridContainer" parent="CenterContainer/Inventory/Slots/TabContainer/Creative Inv/ScrollContainer" unique_id=1391483703 node_paths=PackedStringArray("targetInventory")]
+custom_minimum_size = Vector2(495, 220)
+layout_mode = 2
+columns = 9
+script = ExtResource("6_w8wei")
+targetInventory = NodePath("../../../Inventory/Inventory")
+creativeSlotScene = ExtResource("3_7tgkj")
+
+[node name="Hotbar" type="GridContainer" parent="CenterContainer/Inventory/Slots" unique_id=1108231147 node_paths=PackedStringArray("mainInventory")]
+custom_minimum_size = Vector2(0, 55)
+layout_mode = 2
+columns = 9
+script = ExtResource("4_jevvu")
+blankIcon = ExtResource("2_636u5")
+slotScene = ExtResource("3_7tgkj")
+mainInventory = NodePath("../TabContainer/Inventory/Inventory")
+
+[node name="Sword" type="Button" parent="." unique_id=1234707674 node_paths=PackedStringArray("inv")]
+layout_mode = 0
+offset_left = 1018.0
+offset_top = 16.0
+offset_right = 1136.0
+offset_bottom = 47.0
+text = "Chrono Sword"
+script = ExtResource("3_akgwn")
+inv = NodePath("../CenterContainer/Inventory/Slots/TabContainer/Inventory/Inventory")
+itemId = "chrono_sword"
+
+[node name="Arrows 3" type="Button" parent="." unique_id=1929190198 node_paths=PackedStringArray("inv")]
+layout_mode = 0
+offset_left = 1050.0
+offset_top = 64.0
+offset_right = 1136.0
+offset_bottom = 95.0
+text = "Berries x3"
+script = ExtResource("3_akgwn")
+inv = NodePath("../CenterContainer/Inventory/Slots/TabContainer/Inventory/Inventory")
+itemId = "healing_berry"
+qty = 3
+
+[node name="Arrows 5" type="Button" parent="." unique_id=889420274 node_paths=PackedStringArray("inv")]
+layout_mode = 0
+offset_left = 1050.0
+offset_top = 112.0
+offset_right = 1136.0
+offset_bottom = 143.0
+text = "Berries x5"
+script = ExtResource("3_akgwn")
+inv = NodePath("../CenterContainer/Inventory/Slots/TabContainer/Inventory/Inventory")
+itemId = "healing_berry"
+qty = 5
+
+[node name="CursorItem" type="TextureRect" parent="." unique_id=312029460]
+custom_minimum_size = Vector2(55, 55)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+expand_mode = 1
+
+[node name="Label" type="Label" parent="CursorItem" unique_id=1346290953]
+custom_minimum_size = Vector2(55, 55)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+horizontal_alignment = 2
+vertical_alignment = 2

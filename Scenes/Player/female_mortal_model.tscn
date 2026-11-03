@@ -1,0 +1,109 @@
+[gd_scene format=4 uid="uid://ydpsxwr88jhc"]
+
+[ext_resource type="PackedScene" uid="uid://crbrn6ty01wow" path="res://coremods/Origins/Mortal/Assets/Models/FemaleMortalPlayerModel.glb" id="1_utevo"]
+[ext_resource type="Texture2D" uid="uid://3ncx5uel4u2c" path="res://Assets/TestSword_0.png" id="2_u8dpd"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6uqv0"]
+resource_name = "material_0"
+transparency = 2
+alpha_scissor_threshold = 0.05
+alpha_antialiasing_mode = 0
+cull_mode = 2
+albedo_texture = ExtResource("2_u8dpd")
+texture_filter = 0
+metadata/_gltf_primary_texture_coord = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_qkx4q"]
+_surfaces = [{
+"aabb": AABB(-0.0625, 0, -0.875, 0.125, 0.0625, 1.375),
+"format": 34896613377,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAwAAAAIAAgABAAQABQAAAAMABQABAAAAAwACAAYABgAFAAMABgACAAQABwABAAUABwAFAAYAAQAHAAQABAAHAAYA"),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("////////AAD/////AAAAAP//AAD//wAAAAAAAP//AAD//wAAAAAAAAAA/////wAAAAAAAAAAAAAAAP//AAAAAA==")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_6d86p"]
+resource_name = "blockbench_export_mesh"
+_surfaces = [{
+"aabb": AABB(-0.0625, 0, -0.875, 0.125, 0.0625, 1.375),
+"attribute_data": PackedByteArray("/x8AAP/PAAD/H/8H/8//B/8f/wf/z/8H/x//D//P/w8AAAAA/w8AAAAA/6//D/+v/w8AAP8fAAD/D/+v/x//r/8//xf/T/8X/z//H/9P/x//P/8P/0//D/8//xf/T/8X"),
+"format": 34896613399,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"material": SubResource("StandardMaterial3D_6uqv0"),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("/////////7//////AAD/v///AAD///+///8AAAAA/78AAP//AAD/vwAA//////+/AAAAAAAA/78AAAAA////vwAA//8AAP+//////wAA/78AAP//////v/////////+/AAAAAP///7///wAA////vwAAAAAAAP+///8AAAAA/78AAP////8AgP///////wCAAAAAAP//AID//wAA//8AgP////8AAP//AAD//wAA/////wAAAAD//wAAAAAAAP///38AAP9/AAD/fwAA/38AAP9/////f////3////9///////9/////f////3////9/AAD/fwAA/38AAP9/AAD/f/9/////f////3////9/////f////3////9/////f///")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_qkx4q")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_kfwbt"]
+_surfaces = [{
+"aabb": AABB(-0.125, 0, 0, 0.25, 0.125, 0.0625),
+"format": 34896613377,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAwAAAAIAAgABAAQABQAAAAMABQABAAAAAwACAAYABgAFAAMABgACAAQABwABAAUABwAFAAYAAQAHAAQABAAHAAYA"),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("////////AAD/////AAAAAP//AAD//wAAAAAAAP//AAD//wAAAAAAAAAA/////wAAAAAAAAAAAAAAAP//AAAAAA==")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_2hftr"]
+resource_name = "blockbench_export_mesh2"
+_surfaces = [{
+"aabb": AABB(-0.125, 0, 0, 0.25, 0.125, 0.0625),
+"attribute_data": PackedByteArray("/x//P/8n/z//H/9P/yf/T/8//x//R/8f/z//L/9H/y//H/8v/z//L/8f/zf/P/83/x//N/8//zf/H/8//z//P/8f/x//P/8f/x//L/8//y//H/8P/z//D/8f/x//P/8f"),
+"format": 34896613399,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"material": SubResource("StandardMaterial3D_6uqv0"),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("/////////7//////AAD/v///AAD///+///8AAAAA/78AAP//AAD/vwAA//////+/AAAAAAAA/78AAAAA////vwAA//8AAP+//////wAA/78AAP//////v/////////+/AAAAAP///7///wAA////vwAAAAAAAP+///8AAAAA/78AAP////8AgP///////wCAAAAAAP//AID//wAA//8AgP////8AAP//AAD//wAA/////wAAAAD//wAAAAAAAP///38AAP9/AAD/fwAA/38AAP9/////f////3////9///////9/////f////3////9/AAD/fwAA/38AAP9/AAD/f/9/////f////3////9/////f////3////9/////f///")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_kfwbt")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2hftr"]
+radius = 0.6
+
+[node name="FemaleMortalModel" unique_id=1188928144 instance=ExtResource("1_utevo")]
+
+[node name="SwordAttachment" type="BoneAttachment3D" parent="ROOT/Skeleton3D" parent_id_path=PackedInt32Array(1899736923) index="1" unique_id=590624545]
+transform = Transform3D(0.9914449, -0.1294095, -0.017037079, 0.1294095, 0.9915906, -0.0011071116, 0.017037079, -0.0011071265, 0.9998543, 0.36739498, 1.1709075, 0.033591375)
+bone_name = "RightHand"
+bone_idx = 11
+
+[node name="Sword" type="Node3D" parent="ROOT/Skeleton3D/SwordAttachment" index="0" unique_id=1728135113]
+transform = Transform3D(0.00029021731, 0.99983555, 0.018141724, -0.99987316, 1.1512158e-06, 0.015930107, 0.015927467, -0.018144043, 0.99970853, -0.016348422, -0.06768763, -0.19986013)
+
+[node name="cube" type="MeshInstance3D" parent="ROOT/Skeleton3D/SwordAttachment/Sword" index="0" unique_id=152414636]
+mesh = SubResource("ArrayMesh_6d86p")
+
+[node name="cube2" type="MeshInstance3D" parent="ROOT/Skeleton3D/SwordAttachment/Sword" index="1" unique_id=1113973269]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.03125, 0)
+mesh = SubResource("ArrayMesh_2hftr")
+
+[node name="SwordArea" type="Area3D" parent="ROOT/Skeleton3D/SwordAttachment/Sword" index="2" unique_id=1895035415]
+transform = Transform3D(1, -2.6375346e-09, 1.2281978e-18, 2.6375346e-09, 1, -4.656613e-10, 0, 4.656613e-10, 1, 0, 0, 0)
+collision_layer = 2
+collision_mask = 4
+monitoring = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ROOT/Skeleton3D/SwordAttachment/Sword/SwordArea" index="0" unique_id=507221735]
+transform = Transform3D(0.9918853, -0.059295572, 0.11246127, -0.112332754, 0.005507409, 0.9936554, -0.059538737, -0.9982251, -0.0011981159, -0.0068148375, 0.0004427433, -0.39994156)
+shape = SubResource("CapsuleShape3D_2hftr")
+debug_color = Color(1, 0, 0, 0.41960785)
