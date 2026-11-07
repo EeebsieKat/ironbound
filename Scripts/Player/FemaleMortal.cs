@@ -10,12 +10,18 @@ public partial class FemaleMortal : CharacterBody3D {
 
 	[Export] public float SWING_DECELERATION = 8.0f;
 
+	[Export] public RayCast3D RayCast {get; set;}
+	[Export] public MeshInstance3D BlockHighlight {get; set;}
+
 	public float rotation_angle = 0.0f;
 
 	public AnimationPlayer anim;
 	public Area3D swordArea;
 
+	public static FemaleMortal Instance {get; private set;}
+
 	public override void _Ready() {
+		Instance = this;
 		anim = GetNode<AnimationPlayer>("FemaleMortalModel/AnimationPlayer");
 		swordArea = GetNode<Area3D>("FemaleMortalModel/ROOT/Skeleton3D/SwordAttachment/Sword/SwordArea");
 	}
@@ -64,6 +70,14 @@ public partial class FemaleMortal : CharacterBody3D {
 			rot.Y = (float)Mathf.LerpAngle(rot.Y, rotation_angle, 10 * delta);
 
 			Rotation = rot;
+		}
+
+		if (RayCast.IsColliding() && RayCast.GetCollider() is Chunk chunk) {
+			BlockHighlight.Visible = true;
+
+			var blockPosition = RayCast.GetCollisionPoint() - 0.5f * RayCast.GetCollisionNormal();
+		} else {
+			BlockHighlight.Visible = false;
 		}
 
 		MoveAndSlide();

@@ -4,7 +4,6 @@
 [ext_resource type="Script" uid="uid://dty1p23c77fw0" path="res://Scripts/UI/InventoryWindow.cs" id="1_w8wei"]
 [ext_resource type="Texture2D" uid="uid://oiamv1ugc4yh" path="res://Assets/blank_icon.png" id="2_636u5"]
 [ext_resource type="PackedScene" uid="uid://b8jnptrvic3xw" path="res://Scenes/UI/InventorySlot.tscn" id="3_7tgkj"]
-[ext_resource type="Script" uid="uid://ct08mmvhnvdwr" path="res://Scripts/UI/AddItem.cs" id="3_akgwn"]
 [ext_resource type="Script" uid="uid://d2wy7na5byho5" path="res://Scripts/UI/Hotbar.cs" id="4_jevvu"]
 [ext_resource type="Script" uid="uid://svu3inmgs4vr" path="res://Scripts/UI/HUDHotbar.cs" id="6_jevvu"]
 [ext_resource type="Script" uid="uid://c320wk3x8y8gk" path="res://Scripts/UI/CreativeMenu.cs" id="6_w8wei"]
@@ -115,41 +114,6 @@ script = ExtResource("4_jevvu")
 blankIcon = ExtResource("2_636u5")
 slotScene = ExtResource("3_7tgkj")
 mainInventory = NodePath("../TabContainer/Inventory/Inventory")
-
-[node name="Sword" type="Button" parent="." unique_id=1234707674 node_paths=PackedStringArray("inv")]
-layout_mode = 0
-offset_left = 1018.0
-offset_top = 16.0
-offset_right = 1136.0
-offset_bottom = 47.0
-text = "Chrono Sword"
-script = ExtResource("3_akgwn")
-inv = NodePath("../CenterContainer/Inventory/Slots/TabContainer/Inventory/Inventory")
-itemId = "chrono_sword"
-
-[node name="Arrows 3" type="Button" parent="." unique_id=1929190198 node_paths=PackedStringArray("inv")]
-layout_mode = 0
-offset_left = 1050.0
-offset_top = 64.0
-offset_right = 1136.0
-offset_bottom = 95.0
-text = "Berries x3"
-script = ExtResource("3_akgwn")
-inv = NodePath("../CenterContainer/Inventory/Slots/TabContainer/Inventory/Inventory")
-itemId = "healing_berry"
-qty = 3
-
-[node name="Arrows 5" type="Button" parent="." unique_id=889420274 node_paths=PackedStringArray("inv")]
-layout_mode = 0
-offset_left = 1050.0
-offset_top = 112.0
-offset_right = 1136.0
-offset_bottom = 143.0
-text = "Berries x5"
-script = ExtResource("3_akgwn")
-inv = NodePath("../CenterContainer/Inventory/Slots/TabContainer/Inventory/Inventory")
-itemId = "healing_berry"
-qty = 5
 
 [node name="CursorItem" type="TextureRect" parent="." unique_id=312029460]
 custom_minimum_size = Vector2(55, 55)

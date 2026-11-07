@@ -10,12 +10,22 @@ texture_filter = 0
 texture_repeat = false
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jqta2"]
-size = Vector3(1, 2, 1)
+size = Vector3(0.95, 1.95, 0.95)
 
-[node name="FemaleMortal" type="CharacterBody3D" unique_id=1934131599 groups=["Player"]]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_npuba"]
+transparency = 1
+albedo_color = Color(1, 0.68437964, 0, 0.4745098)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jqta2"]
+material = SubResource("StandardMaterial3D_npuba")
+size = Vector3(1.05, 1.05, 1.05)
+
+[node name="FemaleMortal" type="CharacterBody3D" unique_id=1934131599 node_paths=PackedStringArray("RayCast", "BlockHighlight") groups=["Player"]]
 collision_layer = 2
 collision_mask = 15
 script = ExtResource("1_xq3hk")
+RayCast = NodePath("FemaleMortalModel/ROOT/Skeleton3D/RaycastAttachment/RayCast3D")
+BlockHighlight = NodePath("BlockHighlight")
 
 [node name="FemaleMortalModel" parent="." unique_id=1188928144 instance=ExtResource("2_xq3hk")]
 transform = Transform3D(-0.8, 0, -1.2079664e-07, 0, 0.8, 0, 1.2079664e-07, 0, -0.8, 0, 0, 0)
@@ -23,9 +33,21 @@ transform = Transform3D(-0.8, 0, -1.2079664e-07, 0, 0.8, 0, 1.2079664e-07, 0, -0
 [node name="ROOT" parent="FemaleMortalModel/ROOT/Skeleton3D" parent_id_path=PackedInt32Array(1188928144, 1899736923) index="0" unique_id=78646698]
 surface_material_override/0 = SubResource("StandardMaterial3D_lquwl")
 
+[node name="RaycastAttachment" type="BoneAttachment3D" parent="FemaleMortalModel/ROOT/Skeleton3D" parent_id_path=PackedInt32Array(1188928144, 1899736923) index="2" unique_id=1607601842]
+transform = Transform3D(1, 0, 0, 0, 0.9914449, -0.13052619, 0, 0.13052619, 0.9914449, 0, 2.0000002, 0.06875007)
+bone_name = "Head"
+bone_idx = 6
+
+[node name="RayCast3D" type="RayCast3D" parent="FemaleMortalModel/ROOT/Skeleton3D/RaycastAttachment" unique_id=1550905373]
+target_position = Vector3(0, 0, -5)
+collision_mask = 9
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=412796605]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("BoxShape3D_jqta2")
+
+[node name="BlockHighlight" type="MeshInstance3D" parent="." unique_id=497955143]
+mesh = SubResource("BoxMesh_jqta2")
 
 [connection signal="body_entered" from="FemaleMortalModel/ROOT/Skeleton3D/SwordAttachment/Sword/SwordArea" to="." method="HitEnemy"]
 

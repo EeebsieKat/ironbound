@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://uexafiqjmj44"]
+
+[ext_resource type="PackedScene" uid="uid://ytu6nby2bcw5" path="res://Scenes/Worldgen/Chunk.tscn" id="1_hjv4i"]
+[ext_resource type="Script" uid="uid://csfnlptxeks8d" path="res://Scripts/Worldgen/BlockManager.cs" id="1_ntmyr"]
+[ext_resource type="Script" uid="uid://bg4jaxkyeimag" path="res://Scripts/Worldgen/Block.cs" id="2_ngnty"]
+[ext_resource type="Texture2D" uid="uid://cn14o37ouoj2l" path="res://Assets/stone.png" id="3_tvehy"]
+[ext_resource type="Texture2D" uid="uid://cmgf6x6353ahw" path="res://Assets/dirt.png" id="4_ngnty"]
+[ext_resource type="Texture2D" uid="uid://r51fbs0jp3cf" path="res://Assets/grass_block_top.png" id="5_0kpf6"]
+[ext_resource type="Texture2D" uid="uid://sqy7w3mayqkj" path="res://Assets/grass_block_side.png" id="5_gj6n2"]
+
+[sub_resource type="Resource" id="Resource_tvehy"]
+script = ExtResource("2_ngnty")
+metadata/_custom_type_script = "uid://bg4jaxkyeimag"
+
+[sub_resource type="Resource" id="Resource_ngnty"]
+script = ExtResource("2_ngnty")
+Texture = ExtResource("3_tvehy")
+metadata/_custom_type_script = "uid://bg4jaxkyeimag"
+
+[sub_resource type="Resource" id="Resource_0kpf6"]
+script = ExtResource("2_ngnty")
+Texture = ExtResource("4_ngnty")
+metadata/_custom_type_script = "uid://bg4jaxkyeimag"
+
+[sub_resource type="Resource" id="Resource_gj6n2"]
+script = ExtResource("2_ngnty")
+Texture = ExtResource("5_gj6n2")
+TopTexture = ExtResource("5_0kpf6")
+BottomTexture = ExtResource("4_ngnty")
+metadata/_custom_type_script = "uid://bg4jaxkyeimag"
+
+[node name="Level" type="Node3D" unique_id=688256938]
+
+[node name="BlockManager" type="Node" parent="." unique_id=240408304]
+script = ExtResource("1_ntmyr")
+Air = SubResource("Resource_tvehy")
+Stone = SubResource("Resource_ngnty")
+Dirt = SubResource("Resource_0kpf6")
+Grass = SubResource("Resource_gj6n2")
+
+[node name="Chunk" parent="." unique_id=1960869935 instance=ExtResource("1_hjv4i")]
+
+[node name="Chunk2" parent="." unique_id=458893132 instance=ExtResource("1_hjv4i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 0)
+
+[node name="Chunk3" parent="." unique_id=1887238715 instance=ExtResource("1_hjv4i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -16)
+
+[node name="Chunk4" parent="." unique_id=19213224 instance=ExtResource("1_hjv4i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -16)
