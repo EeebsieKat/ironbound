@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="ItemDef" format=3 uid="uid://b7lu1euxxoxbb"]
+
+[ext_resource type="Script" uid="uid://r115ldthdgyg" path="res://Scripts/Content/ItemComponent.cs" id="1_emcuy"]
+[ext_resource type="Script" uid="uid://qdgc0wxsupf4" path="res://Scripts/Content/ItemDef.cs" id="1_naqql"]
+[ext_resource type="Resource" uid="uid://4vawu3vfjmmo" path="res://Scenes/test/test_stats.tres" id="2_8qk0o"]
+[ext_resource type="PackedScene" uid="uid://v642eqwps53p" path="res://Scenes/test/sword.tscn" id="2_qttss"]
+[ext_resource type="Script" uid="uid://diyk32g2kiibo" path="res://Scripts/Player/BlockInteract.cs" id="3_jkvd5"]
+
+[sub_resource type="Resource" id="Resource_8qydw"]
+script = ExtResource("3_jkvd5")
+CanMine = false
+CanPlace = false
+metadata/_custom_type_script = "uid://diyk32g2kiibo"
+
+[resource]
+script = ExtResource("1_naqql")
+Id = "ironbound:test_sword"
+DisplayName = "Test Sword"
+View = ExtResource("2_qttss")
+SocketOffset = Vector3(0, -0.1, -0.2)
+SocketRotationDegrees = Vector3(0, 0, 90)
+Components = Array[ExtResource("1_emcuy")]([ExtResource("2_8qk0o"), SubResource("Resource_8qydw")])
+metadata/_custom_type_script = "uid://qdgc0wxsupf4"

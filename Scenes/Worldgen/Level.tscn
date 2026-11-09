@@ -1,42 +1,37 @@
 [gd_scene format=3 uid="uid://uexafiqjmj44"]
 
 [ext_resource type="PackedScene" uid="uid://ytu6nby2bcw5" path="res://Scenes/Worldgen/Chunk.tscn" id="1_hjv4i"]
-[ext_resource type="Script" uid="uid://csfnlptxeks8d" path="res://Scripts/Worldgen/BlockManager.cs" id="1_ntmyr"]
-[ext_resource type="Script" uid="uid://bg4jaxkyeimag" path="res://Scripts/Worldgen/Block.cs" id="2_ngnty"]
-[ext_resource type="Texture2D" uid="uid://cn14o37ouoj2l" path="res://Assets/stone.png" id="3_tvehy"]
-[ext_resource type="Texture2D" uid="uid://cmgf6x6353ahw" path="res://Assets/dirt.png" id="4_ngnty"]
-[ext_resource type="Texture2D" uid="uid://r51fbs0jp3cf" path="res://Assets/grass_block_top.png" id="5_0kpf6"]
-[ext_resource type="Texture2D" uid="uid://sqy7w3mayqkj" path="res://Assets/grass_block_side.png" id="5_gj6n2"]
+[ext_resource type="Script" uid="uid://1ifcxgfwrgvn" path="res://Scripts/Worldgen/BlockManager.cs" id="1_ntmyr"]
+[ext_resource type="Script" uid="uid://4ghp78cqb3n5" path="res://Scripts/Worldgen/ChunkManager.cs" id="1_u38eq"]
+[ext_resource type="PackedScene" uid="uid://01u2t8l2teid" path="res://Scenes/Player/female_mortal.tscn" id="8_gj6n2"]
+[ext_resource type="PackedScene" uid="uid://dmo3mxv4cedgn" path="res://Scenes/Player/GameCam.tscn" id="9_gj6n2"]
 
-[sub_resource type="Resource" id="Resource_tvehy"]
-script = ExtResource("2_ngnty")
-metadata/_custom_type_script = "uid://bg4jaxkyeimag"
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_gj6n2"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
 
-[sub_resource type="Resource" id="Resource_ngnty"]
-script = ExtResource("2_ngnty")
-Texture = ExtResource("3_tvehy")
-metadata/_custom_type_script = "uid://bg4jaxkyeimag"
+[sub_resource type="Sky" id="Sky_u38eq"]
+sky_material = SubResource("ProceduralSkyMaterial_gj6n2")
 
-[sub_resource type="Resource" id="Resource_0kpf6"]
-script = ExtResource("2_ngnty")
-Texture = ExtResource("4_ngnty")
-metadata/_custom_type_script = "uid://bg4jaxkyeimag"
-
-[sub_resource type="Resource" id="Resource_gj6n2"]
-script = ExtResource("2_ngnty")
-Texture = ExtResource("5_gj6n2")
-TopTexture = ExtResource("5_0kpf6")
-BottomTexture = ExtResource("4_ngnty")
-metadata/_custom_type_script = "uid://bg4jaxkyeimag"
+[sub_resource type="Environment" id="Environment_acpo2"]
+background_mode = 2
+sky = SubResource("Sky_u38eq")
+glow_enabled = true
 
 [node name="Level" type="Node3D" unique_id=688256938]
 
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=849337873]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 40, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1427730470]
+environment = SubResource("Environment_acpo2")
+
+[node name="ChunkManager" type="Node" parent="." unique_id=2053650705]
+script = ExtResource("1_u38eq")
+
 [node name="BlockManager" type="Node" parent="." unique_id=240408304]
 script = ExtResource("1_ntmyr")
-Air = SubResource("Resource_tvehy")
-Stone = SubResource("Resource_ngnty")
-Dirt = SubResource("Resource_0kpf6")
-Grass = SubResource("Resource_gj6n2")
 
 [node name="Chunk" parent="." unique_id=1960869935 instance=ExtResource("1_hjv4i")]
 
@@ -48,3 +43,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -16)
 
 [node name="Chunk4" parent="." unique_id=19213224 instance=ExtResource("1_hjv4i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -16)
+
+[node name="FemaleMortal" parent="." unique_id=1934131599 node_paths=PackedStringArray("RayCast") instance=ExtResource("8_gj6n2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 40.5, 0)
+ModelFacesPositiveZ = false
+RayCast = NodePath("../GameCam/CameraPitch/SpringArm3D/Camera3D/RayCast3D")
+
+[node name="GameCam" parent="." unique_id=2083354519 node_paths=PackedStringArray("Target") instance=ExtResource("9_gj6n2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 40, 0)
+Target = NodePath("../FemaleMortal")
+
+[editable path="GameCam"]

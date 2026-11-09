@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemDef" format=3 uid="uid://dxcobwmegb3sp"]
+
+[ext_resource type="Script" uid="uid://r115ldthdgyg" path="res://Scripts/Content/ItemComponent.cs" id="1_o074d"]
+[ext_resource type="PackedScene" uid="uid://3pxg13nx1i48" path="res://Scenes/test/pickaxe.tscn" id="2_hj0mh"]
+[ext_resource type="Resource" uid="uid://cehaf4f0f5dmx" path="res://Scenes/test/test_pickaxe_stats.tres" id="2_os14s"]
+[ext_resource type="Script" uid="uid://qdgc0wxsupf4" path="res://Scripts/Content/ItemDef.cs" id="2_sb8kp"]
+
+[resource]
+script = ExtResource("2_sb8kp")
+Id = "ironbound:test_pickaxe"
+DisplayName = "Test Pickaxe"
+View = ExtResource("2_hj0mh")
+SocketOffset = Vector3(0, -0.1, -0.2)
+SocketRotationDegrees = Vector3(0, 0, 90)
+Components = Array[ExtResource("1_o074d")]([ExtResource("2_os14s")])
+metadata/_custom_type_script = "uid://qdgc0wxsupf4"

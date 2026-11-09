@@ -1,0 +1,100 @@
+[gd_scene format=4 uid="uid://v642eqwps53p"]
+
+[ext_resource type="Texture2D" uid="uid://3ncx5uel4u2c" path="res://Assets/TestSword_0.png" id="1_tm6xo"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6uqv0"]
+resource_name = "material_0"
+transparency = 2
+alpha_scissor_threshold = 0.05
+alpha_antialiasing_mode = 0
+cull_mode = 2
+albedo_texture = ExtResource("1_tm6xo")
+texture_filter = 0
+metadata/_gltf_primary_texture_coord = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_qkx4q"]
+_surfaces = [{
+"aabb": AABB(-0.0625, 0, -0.875, 0.125, 0.0625, 1.375),
+"format": 34896613377,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAwAAAAIAAgABAAQABQAAAAMABQABAAAAAwACAAYABgAFAAMABgACAAQABwABAAUABwAFAAYAAQAHAAQABAAHAAYA"),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("////////AAD/////AAAAAP//AAD//wAAAAAAAP//AAD//wAAAAAAAAAA/////wAAAAAAAAAAAAAAAP//AAAAAA==")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_6d86p"]
+resource_name = "blockbench_export_mesh"
+_surfaces = [{
+"aabb": AABB(-0.0625, 0, -0.875, 0.125, 0.0625, 1.375),
+"attribute_data": PackedByteArray("/x8AAP/PAAD/H/8H/8//B/8f/wf/z/8H/x//D//P/w8AAAAA/w8AAAAA/6//D/+v/w8AAP8fAAD/D/+v/x//r/8//xf/T/8X/z//H/9P/x//P/8P/0//D/8//xf/T/8X"),
+"format": 34896613399,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"material": SubResource("StandardMaterial3D_6uqv0"),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("/////////7//////AAD/v///AAD///+///8AAAAA/78AAP//AAD/vwAA//////+/AAAAAAAA/78AAAAA////vwAA//8AAP+//////wAA/78AAP//////v/////////+/AAAAAP///7///wAA////vwAAAAAAAP+///8AAAAA/78AAP////8AgP///////wCAAAAAAP//AID//wAA//8AgP////8AAP//AAD//wAA/////wAAAAD//wAAAAAAAP///38AAP9/AAD/fwAA/38AAP9/////f////3////9///////9/////f////3////9/AAD/fwAA/38AAP9/AAD/f/9/////f////3////9/////f////3////9/////f///")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_qkx4q")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_kfwbt"]
+_surfaces = [{
+"aabb": AABB(-0.125, 0, 0, 0.25, 0.125, 0.0625),
+"format": 34896613377,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAwAAAAIAAgABAAQABQAAAAMABQABAAAAAwACAAYABgAFAAMABgACAAQABwABAAUABwAFAAYAAQAHAAQABAAHAAYA"),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("////////AAD/////AAAAAP//AAD//wAAAAAAAP//AAD//wAAAAAAAAAA/////wAAAAAAAAAAAAAAAP//AAAAAA==")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_2hftr"]
+resource_name = "blockbench_export_mesh2"
+_surfaces = [{
+"aabb": AABB(-0.125, 0, 0, 0.25, 0.125, 0.0625),
+"attribute_data": PackedByteArray("/x//P/8n/z//H/9P/yf/T/8//x//R/8f/z//L/9H/y//H/8v/z//L/8f/zf/P/83/x//N/8//zf/H/8//z//P/8f/x//P/8f/x//L/8//y//H/8P/z//D/8f/x//P/8f"),
+"format": 34896613399,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"material": SubResource("StandardMaterial3D_6uqv0"),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("/////////7//////AAD/v///AAD///+///8AAAAA/78AAP//AAD/vwAA//////+/AAAAAAAA/78AAAAA////vwAA//8AAP+//////wAA/78AAP//////v/////////+/AAAAAP///7///wAA////vwAAAAAAAP+///8AAAAA/78AAP////8AgP///////wCAAAAAAP//AID//wAA//8AgP////8AAP//AAD//wAA/////wAAAAD//wAAAAAAAP///38AAP9/AAD/fwAA/38AAP9/////f////3////9///////9/////f////3////9/AAD/fwAA/38AAP9/AAD/f/9/////f////3////9/////f////3////9/////f///")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_kfwbt")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2hftr"]
+radius = 0.6
+
+[node name="Sword" type="Node3D" unique_id=2021502940]
+transform = Transform3D(-4.371139e-08, 1.0000001, 0, -1, -4.3711392e-08, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="cube" type="MeshInstance3D" parent="." unique_id=792601573]
+mesh = SubResource("ArrayMesh_6d86p")
+
+[node name="cube2" type="MeshInstance3D" parent="." unique_id=1874316661]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.03125, 0)
+mesh = SubResource("ArrayMesh_2hftr")
+
+[node name="SwordArea" type="Area3D" parent="." unique_id=766024841]
+collision_layer = 2
+collision_mask = 4
+monitoring = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SwordArea" unique_id=967813493]
+transform = Transform3D(1.9106855e-15, 4.371138e-08, 0.99999994, 1, -4.371138e-08, 0, 4.371139e-08, 0.9999998, -4.3711385e-08, -0.0068148375, 0.0004427433, -0.39994156)
+shape = SubResource("CapsuleShape3D_2hftr")
+debug_color = Color(1, 0, 0, 0.41960785)

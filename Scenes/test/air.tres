@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="Block" format=3 uid="uid://c7hvi4lc61iw7"]
+
+[ext_resource type="Script" uid="uid://bg4jaxkyeimag" path="res://Scripts/Worldgen/Block.cs" id="1_whf0v"]
+
+[resource]
+script = ExtResource("1_whf0v")
+metadata/_custom_type_script = "uid://bg4jaxkyeimag"

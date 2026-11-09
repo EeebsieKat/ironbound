@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="MeleeStats" format=3 uid="uid://4vawu3vfjmmo"]
+
+[ext_resource type="Script" uid="uid://bx7xwi3xxhr5n" path="res://Scripts/Player/MeleeStats.cs" id="1_f06b2"]
+
+[resource]
+script = ExtResource("1_f06b2")
+Damage = 2
+metadata/_custom_type_script = "uid://bx7xwi3xxhr5n"

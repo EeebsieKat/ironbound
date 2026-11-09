@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="Block" format=3 uid="uid://cu82w17ah57a"]
+
+[ext_resource type="Script" uid="uid://bg4jaxkyeimag" path="res://Scripts/Worldgen/Block.cs" id="1_jep11"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_jep11"]
+load_path = "res://.godot/imported/dirt.png-080c3ebef1c97cf8f08abe0e43389d15.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_k6iyt"]
+load_path = "res://.godot/imported/grass_block_side.png-cdf0e9fe84cd70faa87af76792ed4df6.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_3j2kb"]
+load_path = "res://.godot/imported/grass_block_top.png-7e7303bc459ef40b18ce84a129d0e35d.ctex"
+
+[resource]
+script = ExtResource("1_jep11")
+Texture = SubResource("CompressedTexture2D_k6iyt")
+TopTexture = SubResource("CompressedTexture2D_3j2kb")
+BottomTexture = SubResource("CompressedTexture2D_jep11")
+metadata/_custom_type_script = "uid://bg4jaxkyeimag"

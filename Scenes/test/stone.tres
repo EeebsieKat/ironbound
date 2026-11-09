@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Block" format=3 uid="uid://ccywkvs2xf3bl"]
+
+[ext_resource type="Script" uid="uid://bg4jaxkyeimag" path="res://Scripts/Worldgen/Block.cs" id="1_ys1nc"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ys1nc"]
+load_path = "res://.godot/imported/stone.png-53bde1a7bc7aaa1c46111452ff1f72a0.ctex"
+
+[resource]
+script = ExtResource("1_ys1nc")
+Texture = SubResource("CompressedTexture2D_ys1nc")
+metadata/_custom_type_script = "uid://bg4jaxkyeimag"

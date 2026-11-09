@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://dmo3mxv4cedgn"]
+
+[ext_resource type="Script" uid="uid://bar24dr1y24cn" path="res://Scripts/Player/GameCam.cs" id="1_i2o7i"]
+
+[node name="GameCam" type="Node3D" unique_id=2083354519]
+script = ExtResource("1_i2o7i")
+
+[node name="CameraPitch" type="Node3D" parent="." unique_id=161848728]
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraPitch" unique_id=908572284]
+spring_length = 3.0
+
+[node name="Camera3D" type="Camera3D" parent="CameraPitch/SpringArm3D" unique_id=1663261479]
+
+[node name="RayCast3D" type="RayCast3D" parent="CameraPitch/SpringArm3D/Camera3D" unique_id=1703026063]
+target_position = Vector3(0, 0, -10)
+collision_mask = 9

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemDef" format=3 uid="uid://0gd1hfd0ja5t"]
+
+[ext_resource type="Script" uid="uid://qdgc0wxsupf4" path="res://Scripts/Content/ItemDef.cs" id="1_nnfuy"]
+[ext_resource type="PackedScene" uid="uid://c3il6ubdwmrbb" path="res://Scenes/test/box.tscn" id="1_xdx8s"]
+
+[resource]
+script = ExtResource("1_nnfuy")
+Id = "ironbound:banana"
+DisplayName = "Banana"
+View = ExtResource("1_xdx8s")
+metadata/_custom_type_script = "uid://qdgc0wxsupf4"

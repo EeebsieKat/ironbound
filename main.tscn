@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cs45cfvh3d5eo" path="res://Main.cs" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://01u2t8l2teid" path="res://Scenes/Player/female_mortal.tscn" id="2_0xm2m"]
-[ext_resource type="Script" uid="uid://cbt6wndtqdnck" path="res://Scripts/Player/GameCam.cs" id="3_h2yge"]
+[ext_resource type="Script" uid="uid://bar24dr1y24cn" path="res://Scripts/Player/GameCam.cs" id="3_h2yge"]
 [ext_resource type="MeshLibrary" uid="uid://3rnx1ia7mhtv" path="res://Assets/TestGridTiles.tres" id="4_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://ddtj80pysoov8" path="res://Scenes/Enemies/enemy.tscn" id="5_lquwl"]
 [ext_resource type="PackedScene" uid="uid://c3517y0e5vxj3" path="res://Scenes/UI/UI.tscn" id="6_7mycd"]

@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://c3il6ubdwmrbb"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qygyb"]
+albedo_color = Color(1, 0.8091447, 0, 1)
+metallic = 1.0
+metallic_specular = 0.67
+
+[sub_resource type="BoxMesh" id="BoxMesh_jqta2"]
+material = SubResource("StandardMaterial3D_qygyb")
+
+[node name="Box" type="MeshInstance3D" unique_id=1285395782]
+mesh = SubResource("BoxMesh_jqta2")

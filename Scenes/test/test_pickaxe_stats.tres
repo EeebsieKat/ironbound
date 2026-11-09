@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="BlockInteract" format=3 uid="uid://cehaf4f0f5dmx"]
+
+[ext_resource type="Script" uid="uid://diyk32g2kiibo" path="res://Scripts/Player/BlockInteract.cs" id="1_snygd"]
+
+[resource]
+script = ExtResource("1_snygd")
+CanPlace = false
+metadata/_custom_type_script = "uid://diyk32g2kiibo"
