@@ -1,16 +1,23 @@
--- Base-game items. One table per item: display name, the scene that renders
--- in hand, socket fine-tuning, a moveset (stance), and the component bag.
+-- Base-game items. One table per item: display name, the view (see below),
+-- socket fine-tuning, a moveset (stance), and the component bag.
 --
 -- Components: 'melee' makes the swing able to hit, 'block_interact' makes it
 -- able to work blocks. Absence is meaningful - the sword can't mine, the
 -- pickaxe can't hurt anyone, empty hands are the fallback in engine code.
 --
--- 'origins:bloodthirst' is defined in components.lua and demonstrates a mod
--- registering its own component TYPE with its own hooks. Component TYPES must
--- register before items (main.lua requires components.lua first) because
--- components resolve at registration time.
+-- 'origins:bloodthirst' is defined in components.lua (component TYPES must
+-- register before items - main.lua requires components.lua first).
 --
--- >>> ADJUST THE view PATHS to your actual item scenes (or a box.tscn) <<<
+-- The view comes in two forms:
+--   1. a scene path (the sword below) - your own .tscn, still works
+--   2. a table the ENGINE builds (the pickaxe below) - no editor needed:
+--        model = 'res://....glb'          a model file, or...
+--        primitive = 'box'                box/sphere/cylinder/capsule
+--        size = { x, y, z }               box only
+--        texture = 'res://....png'        optional
+--        color = '#rrggbb'                optional
+--        rotation / scale                 on the view root
+--      Fine-tuning hand placement stays socket_offset / socket_rotation.
 
 api.items.register('ironbound:test_sword', {
   display = 'Iron Sword',
@@ -21,19 +28,25 @@ api.items.register('ironbound:test_sword', {
 
   components = {
     melee = { damage = 2, knockback = 6, hit_start = 0.25, hit_end = 0.6 },
-    ['origins:bloodthirst'] = { bonus = 2 },
+    ['ironbound:bloodthirst'] = { bonus = 2 },
   },
 })
 
 api.items.register('ironbound:test_pickaxe', {
   display = 'Iron Pickaxe',
-  view = 'res://Scenes/test/pickaxe.tscn',
+
+  -- Built by the engine from data alone - no .tscn, no editor:
+  view = {
+    primitive = 'box',
+    size = { x = 0.12, y = 0.12, z = 1.1 },
+    color = '#8f9aa6',
+  },
   socket_offset = { x = 0.05, y = 0, z = 0 },
 
   -- no stance: falls back to the player's default moveset
   -- no melee: swings all day, hits nothing
 
   components = {
-    block_interact = { can_mine = true, can_place = true, places = 'origins:stone' },
+    block_interact = { can_mine = true, can_place = true, places = 'ironbound:stone' },
   },
 })

@@ -4,6 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+// 'Script' exists in BOTH Godot (GDScript resources) and MoonSharp - alias
+// the MoonSharp one for this file. Godot's Script type is never used here.
+using Script = MoonSharp.Interpreter.Script;
+
 // The MoonSharp-backed Lua runtime: one isolated Script per mod. The doc's
 // sandbox rules live here:
 //   - CoreModules.Preset_SoftSandbox strips io / os / debug / package / load
@@ -17,11 +21,21 @@ using System.Linq;
 //   api.log(msg)
 //   api.items.register(id, def)      def = { display, view, socket_offset,
 //                                      socket_rotation, stance, components }
+//                                      view = 'res://....tscn' OR a table the
+//                                      engine builds: { model | primitive,
+//                                      size, radius, height, texture, color,
+//                                      rotation, scale } - no editor needed
 //   api.items.patch(id, patch)       same fields, applied in place
-//   api.blocks.register(id, def)     def = { resource = "res://....tres" }
+//   api.blocks.register(id, def)     def = { texture, top, bottom } - png
+//                                      paths, the engine builds the Block
+//                                      (or the old { resource = "....tres" })
 //   api.events.on(name, fn, opts)    opts = { priority = 0 }
 //   api.components.register(id, spec) spec = { on_equip, on_unequip }
 //   api.player.attacking() / api.player.equipped()
+//
+// Paths anywhere in the api: 'res://...' and 'user://...' are absolute;
+// anything else is RELATIVE to the mod's own folder ('textures/dirt.png'),
+// which is what makes a mod a portable folder - no engine paths inside.
 //
 // Known gap vs the doc, stated plainly: per-hook instruction budgets.
 // MoonSharp 2.x has no public instruction-counting API; a native runtime (or
@@ -31,7 +45,7 @@ public sealed class MoonSharpRuntime : ILuaRuntime {
 
     public string ModId { get; }
 
-    private readonly MoonSharp.Interpreter.Script script;
+    private readonly Script script;
     private readonly string modRoot; // res://mods/<folder>
     private readonly HashSet<string> loadedFiles = new(); // require cycle guard
     private readonly Dictionary<string, CustomComponentSpec> customComponents = new();
@@ -41,7 +55,7 @@ public sealed class MoonSharpRuntime : ILuaRuntime {
         this.modRoot = modRoot;
 
         // Soft sandbox: no io, os, debug, package, load, dofile.
-        script = new MoonSharp.Interpreter.Script(CoreModules.Preset_SoftSandbox);
+        script = new Script(CoreModules.Preset_SoftSandbox);
         RegisterApi();
     }
 
@@ -109,6 +123,7 @@ public sealed class MoonSharpRuntime : ILuaRuntime {
             return DynValue.NewNil();
         }
 
+        // MoonSharp 2.0 arg order: DoString(code, Table globalContext, string codeFriendlyName)
         return script.DoString(code, null, $"{ModId}/{file}");
     }
 
@@ -170,20 +185,67 @@ public sealed class MoonSharpRuntime : ILuaRuntime {
             return;
         }
 
-        string path = GetString(def, "resource", null);
-        if (path == null) {
-            GD.PushError($"[{ModId}] blocks.register('{id}'): 'resource' (Block .tres path) is required");
+        // Old form, still supported: a Block resource you made yourself.
+        string resource = GetString(def, "resource", null);
+        if (resource != null) {
+            Block block = ResourceLoader.Load<Block>(resource);
+            if (block == null) {
+                GD.PushError($"[{ModId}] blocks.register('{id}'): no Block resource at '{resource}'");
+                return;
+            }
+            Registries.Blocks.Register(id, block, ModId);
             return;
         }
 
-        Block block = ResourceLoader.Load<Block>(path);
-        if (block == null) {
-            GD.PushError($"[{ModId}] blocks.register('{id}'): no Block resource at '{path}'");
-            return;
+        // Pure-data form: png paths only, the engine builds the Block. This is
+        // THE modding path - no .tres, no Godot editor.
+        Texture2D sides = LoadTexture(GetString(def, "texture", null), id, "texture");
+        Texture2D top = LoadTexture(GetString(def, "top", null), id, "top");
+        Texture2D bottom = LoadTexture(GetString(def, "bottom", null), id, "bottom");
+
+        if (sides == null && top == null && bottom == null && def.Keys.Any(k => k.Type == DataType.String)) {
+            GD.PushWarning($"[{ModId}] blocks.register('{id}'): no usable textures (typo'd key?) - " +
+                           "fine for air, invisible for anything else");
         }
 
-        Registries.Blocks.Register(id, block, ModId);
+        Registries.Blocks.Register(id, BuildBlock(sides, top, bottom), ModId);
     }
+
+    // Every path a mod hands us goes through here:
+    //   'res://...' / 'user://...'  absolute, used as-is
+    //   anything else                RELATIVE to the mod's own folder - the
+    //                                portable form ('textures/dirt.png')
+    private string ResolvePath(string path) =>
+        path.StartsWith("res://") || path.StartsWith("user://") ? path : $"{modRoot}/{path}";
+
+    private Texture2D LoadTexture(string path, string id, string field) {
+        if (path == null) return null;
+        Texture2D texture = LoadTexture(ResolvePath(path));
+        if (texture == null) {
+            GD.PushError($"[{ModId}] blocks.register('{id}'): {field} '{path}' failed to load");
+        }
+        return texture;
+    }
+
+    // res:// textures go through ResourceLoader (imported); user:// textures
+    // have no import step, so they load as raw images at runtime.
+    private static Texture2D LoadTexture(string path) {
+        if (path.StartsWith("user://")) {
+            Image image = Image.LoadFromFile(ProjectSettings.GlobalizePath(path));
+            return image != null ? ImageTexture.CreateFromImage(image) : null;
+        }
+        return ResourceLoader.Load<Texture2D>(path);
+    }
+
+    // Block.cs shape, known engine-side: three face textures, Textures is
+    // DERIVED from them (read-only computed property). Direct assignment,
+    // compile-checked - no reflection needed. If Block ever changes shape,
+    // the compiler says so here instead of a runtime warning.
+    private static Block BuildBlock(Texture2D sides, Texture2D top, Texture2D bottom) => new() {
+        Texture = sides,
+        TopTexture = top,
+        BottomTexture = bottom,
+    };
 
     // ------------------------------------------------------------- items --
 
@@ -199,7 +261,7 @@ public sealed class MoonSharpRuntime : ILuaRuntime {
         if (patch == null) return;
         Registries.Items.Patch(id, item => {
             if (Has(patch, "display")) item.DisplayName = GetString(patch, "display", item.DisplayName);
-            if (Has(patch, "view")) item.View = LoadView(GetString(patch, "view", ""), id);
+            if (Has(patch, "view")) item.View = BuildView(patch.Get("view"), id);
             if (Has(patch, "socket_offset")) item.SocketOffset = ToVector3(patch.Get("socket_offset").Table);
             if (Has(patch, "socket_rotation")) item.SocketRotationDegrees = ToVector3(patch.Get("socket_rotation").Table);
             if (Has(patch, "stance")) item.Stance = BuildStance(patch.Get("stance").Table);
@@ -211,7 +273,7 @@ public sealed class MoonSharpRuntime : ILuaRuntime {
         ItemDef item = new() {
             Id = id,
             DisplayName = GetString(def, "display", id),
-            View = LoadView(GetString(def, "view", null), id),
+            View = BuildView(def.Get("view"), id),
         };
 
         DynValue offset = def.Get("socket_offset");
@@ -238,11 +300,146 @@ public sealed class MoonSharpRuntime : ILuaRuntime {
 
     private PackedScene LoadView(string path, string itemId) {
         if (path == null) return null;
-        PackedScene scene = ResourceLoader.Load<PackedScene>(path);
+        PackedScene scene = ResourceLoader.Load<PackedScene>(ResolvePath(path));
         if (scene == null) {
             GD.PushWarning($"[{ModId}] item '{itemId}': no view scene at '{path}' - it will equip invisibly");
         }
         return scene;
+    }
+
+    // The no-editor view: builds the item's view scene from data. Two forms -
+    //   view = 'res://....tscn'         your own scene (old form, still works)
+    //   view = {                        built here, packed into a PackedScene:
+    //     model     = 'res://....glb',  a model file (loads as a scene)
+    //     -- or, with no model file, a primitive mesh:
+    //     primitive = 'box'|'sphere'|'cylinder'|'capsule',
+    //     size      = { x, y, z },     box only; default (0.3, 0.3, 1.0)
+    //     radius    = .., height = .., the round primitives
+    //     texture   = 'res://....png', optional albedo texture
+    //     color     = '#rrggbb',       optional albedo color
+    //     rotation  = { x, y, z },     degrees, on the view root
+    //     scale     = 1.5 or { x, y, z },
+    //   }
+    // Socket placement stays the item's socket_offset / socket_rotation -
+    // the slot decides the socket, the item only fine-tunes.
+    private PackedScene BuildView(DynValue spec, string itemId) {
+        if (spec == null || spec.IsNil()) return null;
+        if (spec.Type == DataType.String) return LoadView(spec.String, itemId);
+        if (spec.Type != DataType.Table) return null;
+        Table view = spec.Table;
+
+        Node3D root = new() { Name = "View" };
+
+        string model = GetString(view, "model", null);
+        if (model != null) {
+            Node3D instance = LoadModelInstance(model, itemId);
+            if (instance != null) {
+                root.AddChild(instance);
+                instance.Owner = root; // Pack() includes owned children
+            }
+            // null already logged - the item equips invisibly
+        } else {
+            MeshInstance3D mesh = new() { Name = "ViewMesh", Mesh = BuildPrimitiveMesh(view, itemId) };
+            root.AddChild(mesh);
+            mesh.Owner = root; // Pack() includes owned children
+        }
+
+        DynValue rotation = view.Get("rotation");
+        if (rotation.Type == DataType.Table) root.RotationDegrees = ToVector3(rotation.Table);
+
+        DynValue scale = view.Get("scale");
+        if (scale.Type == DataType.Number) root.Scale = Vector3.One * (float)scale.Number;
+        else if (scale.Type == DataType.Table) root.Scale = ToVector3(scale.Table);
+
+        PackedScene packed = new();
+        if (packed.Pack(root) != Error.Ok) {
+            GD.PushError($"[{ModId}] item '{itemId}': failed to pack built view");
+            return null;
+        }
+        return packed;
+    }
+
+    // Model loading, both homes:
+    //   res://....glb   imported by the editor -> ResourceLoader (PackedScene)
+    //   user://....glb  NO import step -> GltfDocument parses it at runtime
+    // A model file whose root is not a 3D node logs and returns null.
+    private Node3D LoadModelInstance(string path, string itemId) {
+        path = ResolvePath(path);
+
+        if (path.StartsWith("user://") &&
+            (path.EndsWith(".glb") || path.EndsWith(".gltf"))) {
+            GltfDocument document = new();
+            GltfState state = new();
+            if (document.AppendFromFile(ProjectSettings.GlobalizePath(path), state) != Error.Ok) {
+                GD.PushError($"[{ModId}] item '{itemId}': can't parse model '{path}'");
+                return null;
+            }
+            // GenerateScene returns Node, not Node3D - the root of a gltf
+            // isn't guaranteed to be 3D. Pattern-match both casts the type
+            // and rejects non-3D roots in one check.
+            if (document.GenerateScene(state) is not Node3D modelScene) {
+                GD.PushError($"[{ModId}] item '{itemId}': model root is not a 3D node");
+                return null;
+            }
+            return modelScene;
+        }
+
+        PackedScene scene = ResourceLoader.Load<PackedScene>(path);
+        if (scene == null) {
+            GD.PushError($"[{ModId}] item '{itemId}': no model at '{path}' - it will equip invisibly");
+            return null;
+        }
+        if (scene.Instantiate() is not Node3D instance) {
+            GD.PushError($"[{ModId}] item '{itemId}': model root is not a 3D node");
+            return null;
+        }
+        return instance;
+    }
+
+    private PrimitiveMesh BuildPrimitiveMesh(Table view, string itemId) {
+        PrimitiveMesh mesh = GetString(view, "primitive", "box") switch {
+            "box" => new BoxMesh {
+                Size = Has(view, "size") ? ToVector3(view.Get("size").Table) : new Vector3(0.3f, 0.3f, 1.0f),
+            },
+            "sphere" => new SphereMesh {
+                Radius = (float)GetNumber(view, "radius", 0.5),
+                Height = (float)GetNumber(view, "height", 1),
+            },
+            "cylinder" => new CylinderMesh {
+                TopRadius = (float)GetNumber(view, "radius", 0.25),
+                BottomRadius = (float)GetNumber(view, "radius", 0.25),
+                Height = (float)GetNumber(view, "height", 1),
+            },
+            "capsule" => new CapsuleMesh {
+                Radius = (float)GetNumber(view, "radius", 0.25),
+                Height = (float)GetNumber(view, "height", 1),
+            },
+            _ => FallbackBox(view, itemId),
+        };
+
+        StandardMaterial3D material = new();
+
+        string texture = GetString(view, "texture", null);
+        if (texture != null) {
+            Texture2D loaded = ResourceLoader.Load<Texture2D>(texture);
+            if (loaded == null) GD.PushError($"[{ModId}] item '{itemId}': view texture '{texture}' failed to load");
+            else material.AlbedoTexture = loaded;
+        }
+
+        string color = GetString(view, "color", null);
+        if (color != null) {
+            if (Color.HtmlIsValid(color)) material.AlbedoColor = Color.FromHtml(color);
+            else GD.PushError($"[{ModId}] item '{itemId}': '{color}' is not a valid #rrggbb color");
+        }
+
+        mesh.Material = material;
+        return mesh;
+
+        PrimitiveMesh FallbackBox(Table v, string id) {
+            GD.PushError($"[{ModId}] item '{id}': unknown primitive " +
+                         $"'{GetString(v, "primitive", "")}' (box/sphere/cylinder/capsule) - using box");
+            return new BoxMesh { Size = new Vector3(0.3f, 0.3f, 1.0f) };
+        }
     }
 
     private Godot.Collections.Array<ItemComponent> BuildComponents(Table components, string itemId) {

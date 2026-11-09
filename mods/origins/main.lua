@@ -13,4 +13,4 @@ require('components')
 require('items')
 require('rules')
 
-api.log('Origins content loaded')
+api.log('Ironbound content loaded')

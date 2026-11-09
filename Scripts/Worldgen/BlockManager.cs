@@ -14,10 +14,10 @@ public partial class BlockManager : Node {
 
     // Which registry ids the terrain generator uses. Scene data, not code -
     // a modded world can point these at its own blocks.
-    [Export] public string AirId = "origins:air";
-    [Export] public string StoneId = "origins:stone";
-    [Export] public string DirtId = "origins:dirt";
-    [Export] public string GrassId = "origins:grass";
+    [Export] public string AirId = "ironbound:air";
+    [Export] public string StoneId = "ironbound:stone";
+    [Export] public string DirtId = "ironbound:dirt";
+    [Export] public string GrassId = "ironbound:grass";
 
     public Block Air {get; private set;}
     public Block Stone {get; private set;}

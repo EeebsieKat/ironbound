@@ -7,7 +7,7 @@
 -- This is the doc's "mods register new component types" mechanism in action:
 -- the engine knows nothing about bloodthirst; it just calls the hooks.
 
-api.components.register('origins:bloodthirst', {
+api.components.register('ironbound:bloodthirst', {
   on_equip = function(item_id, data)
     api.log(item_id .. ' hums with hunger (bonus ' .. tostring(data.bonus) .. ')')
   end,
