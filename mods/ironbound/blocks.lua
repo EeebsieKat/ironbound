@@ -4,8 +4,6 @@
 --   texture = sides of the block
 --   top / bottom = optional per-face overrides (default: same as texture)
 --   no textures at all = air-like (never rendered, never meshed)
---
--- >>> ADJUST THE PATHS to wherever your pngs actually live <<<
 
 api.blocks.register('ironbound:air', {})
 
@@ -20,5 +18,5 @@ api.blocks.register('ironbound:dirt', {
 api.blocks.register('ironbound:grass', {
   texture = 'res://Assets/grass_block_side.png',
   top = 'res://Assets/grass_block_top.png',
-  bottom = 'res://Assets/dirt.png'
+  bottom = 'res://Assets/dirt.png',
 })

@@ -56,6 +56,6 @@ Sockets = Array[ExtResource("6_ledfo")]([SubResource("Resource_stko2")])
 [node name="Equipment" type="Node" parent="." unique_id=399641165 node_paths=PackedStringArray("View")]
 script = ExtResource("7_ledfo")
 View = NodePath("../Attach")
-LoadoutIds = PackedStringArray("ironbound:test_pickaxe", "ironbound:test_sword")
+LoadoutIds = PackedStringArray("ironbound:test_pickaxe", "ironbound:test_sword", "ruby:wand")
 
 [editable path="FemaleMortalModel"]

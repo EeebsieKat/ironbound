@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://bark5brkrtl2f"]
+
+[ext_resource type="PackedScene" uid="uid://dmo3mxv4cedgn" path="res://Scenes/Player/GameCam.tscn" id="1_du7jb"]
+
+[sub_resource type="Gradient" id="Gradient_c4swf"]
+colors = PackedColorArray(0.206249, 0.12176347, 0.038921587, 1, 0.6315303, 0.5210061, 0.42098123, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_3ldv8"]
+noise_type = 3
+seed = 777
+frequency = 0.02
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_2bck7"]
+noise = SubResource("FastNoiseLite_3ldv8")
+color_ramp = SubResource("Gradient_c4swf")
+seamless = true
+as_normal_map = true
+bump_strength = 10.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jqta2"]
+albedo_color = Color(0.7060641, 0.55936587, 0.36231893, 1)
+roughness_texture = SubResource("NoiseTexture2D_2bck7")
+
+[node name="CombatPrototypeScene" type="Node3D" unique_id=142581339]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=824186876]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+light_color = Color(1, 0.9903083, 0.9515873, 1)
+shadow_enabled = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=611110351]
+size = Vector3(20, 1, 20)
+material = SubResource("StandardMaterial3D_jqta2")
+
+[node name="GameCam" parent="." unique_id=2083354519 instance=ExtResource("1_du7jb")]

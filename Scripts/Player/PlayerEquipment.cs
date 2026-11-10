@@ -8,11 +8,11 @@ using System.Collections.Generic;
 // numbers - all by subscribing to EquippedChanged. Nobody polls.
 //
 // Moddable form (design doc): the loadout can be a list of REGISTRY IDS
-// ("origins:iron_sword") instead of direct resource references - LoadoutIds
+// ("ironbound:test_sword") instead of direct resource references - LoadoutIds
 // below. Direct Loadout refs still work (that's what you set up already).
 //
 // Every equip goes through the event bus: "item.equipping" is cancellable
-// (OriginsContent vetoes mid-swing swaps with it), "item.equipped" fires
+// (a Lua rule vetoes mid-swing swaps with it), "item.equipped" fires
 // after. Equip() returns false when vetoed - Cycle() then stays put.
 [GlobalClass]
 public partial class PlayerEquipment : Node {
@@ -24,7 +24,7 @@ public partial class PlayerEquipment : Node {
     // Position 0 is always empty hands.
     [Export] public Godot.Collections.Array<ItemDef> Loadout { get; set; } = new();
 
-    // The moddable form: registry ids ("origins:iron_sword"), resolved from
+    // The moddable form: registry ids ("ironbound:test_sword"), resolved from
     // Registries.Items. Takes precedence over Loadout when non-empty.
     [Export] public string[] LoadoutIds { get; set; } = Array.Empty<string>();
 
@@ -44,9 +44,10 @@ public partial class PlayerEquipment : Node {
     private int loadoutIndex; // 0 = empty hands, 1..n = loadout[n-1]
 
     public override void _Ready() {
-        // Deferred: content nodes (OriginsContent) register their items during
-        // _Ready; deferred calls run after EVERY _Ready in the tree, so the
-        // registry is guaranteed populated by then.
+        // Deferred: mods load in the LuaEngine autoload (before the scene
+        // tree exists), but deferred keeps this robust against ANY future
+        // load-order change - deferred calls run after every _Ready in the
+        // tree, so the registry is guaranteed populated by then.
         CallDeferred(nameof(ResolveLoadout));
 
         if (InitialItem != null) Equip(InitialItem);
@@ -63,7 +64,7 @@ public partial class PlayerEquipment : Node {
                 if (def == null) {
                     GD.PushError($"[equipment] registry has no item '{id}' - check " +
                                  "LoadoutIds spelling (mods use 'mod:name' ids, e.g. " +
-                                 "'origins:iron_sword') and that the LuaEngine autoload " +
+                                 "'ironbound:test_sword') and that the LuaEngine autoload " +
                                  "loaded the mods");
                     continue;
                 }

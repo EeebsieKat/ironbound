@@ -3,6 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://ytu6nby2bcw5" path="res://Scenes/Worldgen/Chunk.tscn" id="1_hjv4i"]
 [ext_resource type="Script" uid="uid://1ifcxgfwrgvn" path="res://Scripts/Worldgen/BlockManager.cs" id="1_ntmyr"]
 [ext_resource type="Script" uid="uid://4ghp78cqb3n5" path="res://Scripts/Worldgen/ChunkManager.cs" id="1_u38eq"]
+[ext_resource type="PackedScene" uid="uid://ddtj80pysoov8" path="res://Scenes/Enemies/enemy.tscn" id="6_tvehy"]
+[ext_resource type="PackedScene" uid="uid://dngkl1sdlnrwv" path="res://Scenes/Content/WorldItem.tscn" id="7_ngnty"]
 [ext_resource type="PackedScene" uid="uid://01u2t8l2teid" path="res://Scenes/Player/female_mortal.tscn" id="8_gj6n2"]
 [ext_resource type="PackedScene" uid="uid://dmo3mxv4cedgn" path="res://Scenes/Player/GameCam.tscn" id="9_gj6n2"]
 
@@ -52,5 +54,11 @@ RayCast = NodePath("../GameCam/CameraPitch/SpringArm3D/Camera3D/RayCast3D")
 [node name="GameCam" parent="." unique_id=2083354519 node_paths=PackedStringArray("Target") instance=ExtResource("9_gj6n2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 40, 0)
 Target = NodePath("../FemaleMortal")
+
+[node name="Enemy" parent="." unique_id=1224824289 instance=ExtResource("6_tvehy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 50, 10)
+
+[node name="WorldItem" parent="." unique_id=605250611 instance=ExtResource("7_ngnty")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
 
 [editable path="GameCam"]

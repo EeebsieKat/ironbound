@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 
 // Loads mods from two homes:
-//   res://mods   core mods that ship with the game (origins lives here)
+//   res://mods   core mods that ship with the game (the ironbound mod
+//                 lives here)
 //   user://mods  drop-in folders - no editor, no project access. The folder
 //                is created on first boot and its location printed.
 // Core loads FIRST, user mods after - so a user mod patching or re-registering
 // base content wins (doc: load order decides, later replaces earlier).
-// The base game (Origins) loads through this exact path - there is no
+// The base game (Ironbound) loads through this exact path - there is no
 // privileged content loader (design doc: "the base game uses the same API as
 // third-party mods").
 //
@@ -29,7 +30,7 @@ public static class LuaModLoader {
         List<Mod> user = Scan("user://mods");
 
         // Manifests known across BOTH roots - user mods may depend on core
-        // mods ("origins") and vice versa. Duplicate ids are an error, not a
+        // mods ("ironbound") and vice versa. Duplicate ids are an error, not a
         // crash: the first mod wins the dependency table, the duplicate still
         // loads and the registry logs the content replacement as usual.
         Dictionary<string, Mod> known = new();
@@ -131,7 +132,7 @@ public static class LuaModLoader {
         // failed to load (bad entry file, api mismatch) = warning: this mod
         // still runs, but expect errors about content that never registered.
         // (This loop once skipped ANY mod that had dependencies at all - the
-        // condition was missing. Origins has no deps, so nothing ever caught
+        // condition was missing. The base mod has no deps, so nothing ever caught
         // it until cobalt declared one.)
         foreach (string dep in mod.Dependencies) {
             if (mod.Id == dep) continue;

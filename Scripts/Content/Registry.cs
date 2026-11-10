@@ -6,9 +6,9 @@ using System.Linq;
 // A registry (design doc: "Registries for items, components, slotsets, sockets,
 // stances, actions and packs. Ids are namespaced as mod:name").
 //
-// The base game registers through the exact same calls a mod will - Origins
-// is "just another mod" (OriginsContent.cs). Later, MoonSharp feeds these
-// same registries from Lua; the API shape stays.
+// The base game registers through the exact same calls a mod will - the
+// ironbound mod IS "just another mod", loaded by the same Lua pipeline as
+// third-party mods. The API shape stays.
 //
 // Register = add (later loads replace earlier ones, logged - that's load
 // order). Patch = mutate an existing entry in place via a callback, logged.
@@ -68,6 +68,16 @@ public sealed class Registry<T> where T : class {
     }
 
     public IEnumerable<string> Ids => entries.Keys;
+
+    // Id/value pairs in registration order - for reports that need both
+    // (the atlas layout dump is the first consumer).
+    public IEnumerable<(string Id, T Value)> Entries {
+        get {
+            foreach (KeyValuePair<string, Entry> kv in entries) {
+                yield return (kv.Key, kv.Value.Value);
+            }
+        }
+    }
 
     // All registered values (insertion order in practice - atlas layout
     // depends on it only cosmetically).

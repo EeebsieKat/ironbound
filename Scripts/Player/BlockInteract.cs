@@ -8,7 +8,7 @@ using Godot;
 //   - empty hands: mine + place still allowed (default, like fists)
 //
 // PlacesBlockId closes the old TODO: WHICH block gets placed is item data
-// now, resolved through Registries.Blocks ("origins:stone", "origins:grass",
+// now, resolved through Registries.Blocks ("ironbound:stone", "ironbound:grass",
 // a mod's "camps:trap_floor", ...). The engine no longer names any block.
 [GlobalClass]
 public partial class BlockInteract : ItemComponent {
@@ -16,5 +16,5 @@ public partial class BlockInteract : ItemComponent {
     [Export] public bool CanMine = true;
     [Export] public bool CanPlace = true;
 
-    [Export] public string PlacesBlockId = "origins:stone";
+    [Export] public string PlacesBlockId = "ironbound:stone";
 }

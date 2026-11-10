@@ -11,7 +11,6 @@ config_version=5
 [application]
 
 config/name="Ironbound"
-run/main_scene="uid://uexafiqjmj44"
 config/features=PackedStringArray("4.7", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 

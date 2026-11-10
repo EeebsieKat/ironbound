@@ -3,14 +3,16 @@
 [ext_resource type="Script" uid="uid://domsmiodqu47o" path="res://Scripts/Content/WorldItem.cs" id="1_v4na5"]
 [ext_resource type="Texture2D" uid="uid://dvadm7f4qgju8" path="res://Assets/white/3-gear/bomb.png" id="2_cjjj1"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_jqta2"]
-radius = 0.25
+[sub_resource type="BoxShape3D" id="BoxShape3D_v4na5"]
+size = Vector3(0.5, 0.5, 0.1)
 
-[node name="WorldItem" type="Area3D" unique_id=1969825276]
+[node name="WorldItem" type="RigidBody3D" unique_id=605250611]
+collision_layer = 16
+collision_mask = 14
 script = ExtResource("1_v4na5")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1342194791]
-shape = SubResource("SphereShape3D_jqta2")
+shape = SubResource("BoxShape3D_v4na5")
 
-[node name="Sprite3D" type="Sprite3D" parent="." unique_id=1123998981]
+[node name="Sprite" type="Sprite3D" parent="." unique_id=1123998981]
 texture = ExtResource("2_cjjj1")

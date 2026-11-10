@@ -474,7 +474,7 @@ public sealed class MoonSharpRuntime : ILuaRuntime {
     private BlockInteract BuildBlockInteract(Table t) => new() {
         CanMine = GetBool(t, "can_mine", true),
         CanPlace = GetBool(t, "can_place", true),
-        PlacesBlockId = GetString(t, "places", "origins:stone"),
+        PlacesBlockId = GetString(t, "places", "ironbound:stone"),
     };
 
     // A component declared by the mod itself: mechanism in C#, behavior in Lua.

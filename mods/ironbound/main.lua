@@ -1,4 +1,4 @@
--- Ironbound: Origins - the base game, as a mod.
+-- Ironbound - the base game, as a mod.
 -- Everything the game ships content-wise happens in this folder, through the
 -- same api a third-party mod gets. If you can read these files, you can mod
 -- this game.

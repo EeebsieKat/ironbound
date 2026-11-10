@@ -1,13 +1,13 @@
 using Godot;
 
 // Content data for one item (design doc: items are registry entries, mods own
-// content). Ids are namespaced mod:name - "origins" is the base game.
-// This is the seed of the item registry; components, stack rules and hooks
-// come later per the doc.
+// content). Ids are namespaced mod:name - "ironbound" is the base game mod.
+// This is the seed of the item registry; stack rules, hooks and the Lua
+// component bridge come later per the doc.
 [GlobalClass]
 public partial class ItemDef : Resource {
 
-    [Export] public string Id = "ironbound:iron_sword";
+    [Export] public string Id = "ironbound:test_sword";
     [Export] public string DisplayName = "Iron Sword";
 
     [Export] public PackedScene View;                    // mesh that renders at the socket

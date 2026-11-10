@@ -21,6 +21,8 @@ using System.Collections.Generic;
 //   item.use        (cancellable) - attack pressed (item)
 //   block.mine      (cancellable) - before breaking (position, normal)
 //   block.place     (cancellable) - before placing (position, normal, block)
+//   entity.hurt     (cancellable) - before damage lands (entity, damage, health, item)
+//   entity.died     (after)       - a killing blow landed (entity, item)
 public sealed class EventContext {
 
     public string Name { get; }

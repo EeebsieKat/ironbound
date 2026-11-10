@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 // Voxel mechanism only - zero content. Blocks arrive through the registry
-// (the origins mod registers them from Lua); this node builds the texture
+// (the ironbound mod registers them from Lua); this node builds the texture
 // atlas from whatever is registered and exposes the terrain generator's four
 // block picks, resolved by id from the registry.
 //
@@ -83,14 +83,32 @@ public partial class BlockManager : Node {
 
         var image = Image.Create(_gridWidth * BlockTextureSize.X, _gridHeight * BlockTextureSize.Y, false, Image.Format.Rgba8);
 
+        List<string> resized = new();
+        List<string> flattened = new();
+
         for (int x = 0; x < _gridWidth; x++) {
             for (int y = 0; y < _gridHeight; y++) {
                 var imgIndex = x + y * _gridWidth;
 
                 if (imgIndex >= blockTextures.Length) continue;
 
-                var currentImage = blockTextures[imgIndex].GetImage();
+                Texture2D texture = blockTextures[imgIndex];
+                var currentImage = texture.GetImage();
                 currentImage.Convert(Image.Format.Rgba8);
+
+                // A texture that isn't tile-sized used to be silently CROPPED
+                // (top-left 16x16 only) - the classic "my block texture looks
+                // flat/wrong" cause. Scale into the tile instead, nearest so
+                // pixel art stays crisp.
+                if (currentImage.GetSize() != BlockTextureSize) {
+                    currentImage.Resize(BlockTextureSize.X, BlockTextureSize.Y, Image.Interpolation.Nearest);
+                    resized.Add(Describe(texture));
+                }
+
+                // The chunk material is opaque; a transparent png would show
+                // the RGB hidden under its transparent pixels (often black or
+                // white). Flatten so a block texture always draws solid.
+                if (ForceOpaque(currentImage)) flattened.Add(Describe(texture));
 
                 image.BlitRect(currentImage, new Rect2I(Vector2I.Zero, BlockTextureSize), new Vector2I(x, y) * BlockTextureSize);
             }
@@ -106,6 +124,56 @@ public partial class BlockManager : Node {
         TextureAtlasSize = new Vector2(_gridWidth, _gridHeight);
 
         GD.Print($"Done loading {blockTextures.Length} images to make {_gridWidth} x {_gridHeight} atlas for {Registries.Blocks.Ids.Count()} blocks");
+
+        foreach (string path in resized) {
+            GD.PushWarning($"[blocks] {path} is not {BlockTextureSize.X}x{BlockTextureSize.Y} - " +
+                           "scaled to fit its atlas tile (draw at tile size for best results)");
+        }
+        foreach (string path in flattened) {
+            GD.PushWarning($"[blocks] {path} has transparent pixels - flattened to opaque " +
+                           "(the block mesher can't draw see-through faces)");
+        }
+
+        DumpAtlasLayout();
+    }
+
+    // Which texture landed on which atlas tile, per block - the FIRST place
+    // to look when a face renders wrong. Prints at every atlas build.
+    private void DumpAtlasLayout() {
+        foreach (var (id, block) in Registries.Blocks.Entries) {
+            List<string> faces = new();
+
+            if (block.Texture != null) faces.Add($"side {DescribeFace(block.Texture)}");
+            if (block.TopTexture != null) faces.Add($"top {DescribeFace(block.TopTexture)}");
+            if (block.BottomTexture != null) faces.Add($"bottom {DescribeFace(block.BottomTexture)}");
+
+            GD.Print(faces.Count == 0
+                ? $"[blocks] atlas '{id}': no textures (air-like)"
+                : $"[blocks] atlas '{id}': {string.Join(", ", faces)}");
+        }
+    }
+
+    private string DescribeFace(Texture2D texture) {
+        Vector2I tile = _atlasLookup.TryGetValue(texture, out Vector2I position) ? position : new Vector2I(-1, -1);
+        return $"{Describe(texture)} {texture.GetWidth()}x{texture.GetHeight()} @({tile.X},{tile.Y})";
+    }
+
+    private static string Describe(Texture2D texture) =>
+        texture.ResourcePath.Length > 0 ? texture.ResourcePath : "<runtime texture>";
+
+    // Returns true if any pixel was made opaque.
+    private static bool ForceOpaque(Image image) {
+        bool changed = false;
+        for (int y = 0; y < image.GetHeight(); y++) {
+            for (int x = 0; x < image.GetWidth(); x++) {
+                Color c = image.GetPixel(x, y);
+                if (c.A < 1f) {
+                    image.SetPixel(x, y, new Color(c.R, c.G, c.B, 1f));
+                    changed = true;
+                }
+            }
+        }
+        return changed;
     }
 
     public Vector2I GetTextureAtlasPosition(Texture2D texture) {
@@ -123,6 +191,6 @@ public partial class BlockManager : Node {
         return Vector2I.Zero;
     }
 
-    // Convenience: block lookup by registry id, e.g. GetBlock("origins:stone").
+    // Convenience: block lookup by registry id, e.g. GetBlock("ironbound:stone").
     public Block GetBlock(string id) => Registries.Blocks.Get(id);
 }

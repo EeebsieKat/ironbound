@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class WorldItem : Area3D {
+public partial class WorldItem : RigidBody3D {
     [Export] public string ItemId;
     [Export] public int Quantity = 1;
 

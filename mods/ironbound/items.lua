@@ -5,7 +5,7 @@
 -- able to work blocks. Absence is meaningful - the sword can't mine, the
 -- pickaxe can't hurt anyone, empty hands are the fallback in engine code.
 --
--- 'origins:bloodthirst' is defined in components.lua (component TYPES must
+-- 'ironbound:bloodthirst' is defined in components.lua (component TYPES must
 -- register before items - main.lua requires components.lua first).
 --
 -- The view comes in two forms:
@@ -21,7 +21,7 @@
 
 api.items.register('ironbound:test_sword', {
   display = 'Iron Sword',
-  view = 'res://Scenes/test/sword.tscn',
+  view = {model = 'res://Assets/TestSword.glb'},
   socket_offset = { x = 0, y = 0, z = 0 },
 
   stance = { idle = 'idle', walk = 'walk', jump = 'jump', attack = 'attack' },

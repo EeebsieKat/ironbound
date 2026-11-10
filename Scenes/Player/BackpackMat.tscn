@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://wt6tfvhmyqn7"]
+
+[ext_resource type="PackedScene" uid="uid://cf5shgxj4gv3i" path="res://Assets/Models/Player/BackpackMat.glb" id="1_n7d3h"]
+[ext_resource type="Script" uid="uid://cdgm6d0cajctq" path="res://Scripts/Player/Accessories/BackpackMat.cs" id="2_1guvj"]
+
+[node name="BackpackMat" unique_id=2010311109 instance=ExtResource("1_n7d3h")]
+script = ExtResource("2_1guvj")
+
+[node name="ROOT" parent="." index="0" unique_id=204125588]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0.5, 0, 0)

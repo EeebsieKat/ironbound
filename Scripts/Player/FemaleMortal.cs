@@ -207,7 +207,7 @@ public partial class FemaleMortal : CharacterBody3D {
             // Which block gets placed is ITEM data now (BlockInteract
             // .PlacesBlockId -> Registries.Blocks); empty hands keep the
             // stone placeholder. The engine no longer names any block.
-            string placeId = blockTool != null ? blockTool.PlacesBlockId : "origins:stone";
+            string placeId = blockTool != null ? blockTool.PlacesBlockId : "ironbound:stone";
             Block toPlace = Registries.Blocks.Get(placeId);
 
             if (toPlace == null) {
